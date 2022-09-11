@@ -1,0 +1,6 @@
+resources:
+- alpine-deployment.yaml
+images:
+- name: nginx
+  newName: 577252187772.dkr.ecr.us-east-1.amazonaws.com/jenkins-pipeline-docker
+  newTag: latest

@@ -1,0 +1,6 @@
+# Default Values for my Helm Chart
+
+container:
+  image: 577252187772.dkr.ecr.us-east-1.amazonaws.com/jenkins-pipeline-docker:latest
+
+replicaCount: 2
