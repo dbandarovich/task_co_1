@@ -1,0 +1,59 @@
+server
+        {
+        listen 80;
+	server_name msite11.sytes.net;
+        root /var/www/msite11.sytes.net;
+	access_log /var/log/nginx/msite11-access.log;
+	error_log /var/log/nginx/msite11-error.log;
+	return 301 https://msite11.sytes.net$request_uri;       
+	index index.html index.php index.htm;
+
+	}
+server
+        {
+        listen 443 ssl;
+        server_name msite11.sytes.net;
+        # SSL support
+        ssl_certificate /etc/letsencrypt/live/msite11.sytes.net/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/msite11.sytes.net/privkey.pem;
+        #charset utf-8;
+        root /var/www/msite11.sytes.net;
+        index index.html index.php index.htm;
+    # Static content
+	location ~* ^.+.(jpg|jpeg|gif|png|css|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|mp3|bmp|flv|rtf|js|swf|iso)$ {
+    	 root /var/www/msite11.sytes.net;
+	     
+}
+		
+#  location ~ \.php$
+#        {
+#          include fastcgi.conf;
+#          fastcgi_intercept_errors on;
+#          try_files $uri =404;
+#          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#	   fastcgi_pass unix://var/run/php/msite11.sytes.net.sock;
+#        }
+
+error_page 404 /custom_404.html;
+        location = /custom_404.html {
+                root /var/www/msite11.sytes.net;
+                internal;
+        }
+	
+
+error_page 500 502 503 504 /custom_50x.html;
+        location = /custom_50x.html {
+      root /var/www/msite11.sytes.net;
+                internal;
+        }
+
+        location /testing {
+                fastcgi_pass unix:/does/not/exist;
+        }
+
+    location / {
+  	#	try_files $uri $uri/ /index.php?q=$uri$args;
+  	     	try_files $uri $uri/ =404; 
+	}
+    }
+
